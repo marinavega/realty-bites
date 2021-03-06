@@ -12,7 +12,6 @@ class House < ApplicationRecord
                         :rooms,
                         :bathrooms,
                         :price,
-                        :address,
                         :link
 
   belongs_to :owner
