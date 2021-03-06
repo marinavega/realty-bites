@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_181618) do
+ActiveRecord::Schema.define(version: 2021_03_06_184436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "houses", force: :cascade do |t|
-    t.integer "category", null: false
+    t.string "category", null: false
     t.integer "size", null: false
     t.integer "rooms", null: false
     t.integer "bathrooms", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_03_06_181618) do
   end
 
   create_table "owners", force: :cascade do |t|
-    t.integer "category", null: false
+    t.string "category", null: false
     t.string "name", null: false
     t.string "phone"
     t.string "email"
