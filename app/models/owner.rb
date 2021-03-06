@@ -4,6 +4,8 @@ class Owner < ApplicationRecord
   validates_uniqueness_of :phone, :email
   validates_presence_of :category, :name
 
+  has_many :houses
+
   enum category: {
     independent: 'Independent',
     real_state: 'Real state'

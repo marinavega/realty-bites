@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_180500) do
+ActiveRecord::Schema.define(version: 2021_03_06_181618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "houses", force: :cascade do |t|
+    t.integer "category", null: false
+    t.integer "size", null: false
+    t.integer "rooms", null: false
+    t.integer "bathrooms", null: false
+    t.integer "price", null: false
+    t.string "address"
+    t.string "link", null: false
+    t.bigint "owner_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id"], name: "index_houses_on_owner_id"
+  end
 
   create_table "owners", force: :cascade do |t|
     t.integer "category", null: false
@@ -24,4 +38,5 @@ ActiveRecord::Schema.define(version: 2021_03_06_180500) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "houses", "owners"
 end
