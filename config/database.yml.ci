@@ -1,0 +1,6 @@
+test:
+  database: realty_bites
+  username: postgres
+  password:
+  adapter: postgresql
+  host: localhost
