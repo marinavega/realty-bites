@@ -33,6 +33,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.2'
   gem 'rubocop-rails', require: false
+  gem 'httparty'
 end
 
 group :development do
