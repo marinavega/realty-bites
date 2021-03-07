@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 
 class OwnersController < ApplicationController
-  before_action :set_owner, only: [:show, :update, :destroy]
+  before_action :set_owner, only: %i[show update destroy]
 
   # GET /owners
   def index
@@ -21,7 +22,7 @@ class OwnersController < ApplicationController
 
   # POST /create_from_link
   def create_from_link
-    data = Scraper.new(params["link"]).parsed_data
+    data = Scraper.new(params['link']).parsed_data
     @owner = Owner.where(phone: data[:owner_params][:phone]).first_or_create!(data[:owner_params])
     @house = @owner.houses.create!(data[:house_params])
 
@@ -44,23 +45,21 @@ class OwnersController < ApplicationController
 
   def owner_params
     params.permit(
-                  :category,
-                  :type,
-                  :email,
-                  :phone,
-                  :name
-                )
+      :category,
+      :type,
+      :email,
+      :phone,
+      :name
+    )
   end
 
   def set_owner
-    begin
-      @owner = Owner.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render :json => "record not found"
-    end
+    @owner = Owner.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: 'record not found'
   end
 
   def owner_exists?(phone)
-    Owner.where(phone: phone) 
+    Owner.where(phone: phone)
   end
 end

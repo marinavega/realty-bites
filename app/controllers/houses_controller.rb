@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class HousesController < ApplicationController
   before_action :set_owner
-  before_action :set_house, only: [:show, :update, :destroy]
+  before_action :set_house, only: %i[show update destroy]
 
   # GET /houses
   def index
@@ -19,11 +21,11 @@ class HousesController < ApplicationController
     render json: @house
   end
 
-   # PUT /owners/owner_id/houses/:id
-   def update
+  # PUT /owners/owner_id/houses/:id
+  def update
     @house.update(house_params)
     head :no_content
-  end
+ end
 
   # DELETE /owners/owner_id/houses/:id
   def destroy
@@ -35,15 +37,15 @@ class HousesController < ApplicationController
 
   def house_params
     params.permit(
-                  :category,
-                  :size,
-                  :rooms,
-                  :bathrooms,
-                  :price,
-                  :description,
-                  :link,
-                  :contact_person_id
-                )
+      :category,
+      :size,
+      :rooms,
+      :bathrooms,
+      :price,
+      :description,
+      :link,
+      :contact_person_id
+    )
   end
 
   def set_owner
@@ -51,10 +53,8 @@ class HousesController < ApplicationController
   end
 
   def set_house
-    begin
-      @house = House.find(params[:id]) if @owner
-    rescue ActiveRecord::RecordNotFound
-      render :json => "record not found"
-    end
+    @house = House.find(params[:id]) if @owner
+  rescue ActiveRecord::RecordNotFound
+    render json: 'record not found'
   end
 end

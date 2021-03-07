@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Houses", type: :request do
-	let!(:owner) { FactoryBot.create(:owner) }
+RSpec.describe 'Houses', type: :request do
+  let!(:owner) { FactoryBot.create(:owner) }
   let!(:houses) { FactoryBot.create_list(:house, 20, owner_id: owner.id) }
   let(:house_id) { houses.first.id }
 
-	describe 'GET /owners/owner_id/houses/:id' do
+  describe 'GET /owners/owner_id/houses/:id' do
     before { get "/owners/#{owner.id}/houses/#{house_id}" }
 
     context 'when the record exists' do
@@ -50,28 +52,30 @@ RSpec.describe "Houses", type: :request do
     end
   end
 
-	describe 'POST /owners/owner_id/houses' do
-    let(:house_attributes) { {
-                                category: 'sale',
-                                size: 85,
-                                rooms: 3,
-                                bathrooms: 1,
-                                price: 650,
-																link: "https://www.theworldsworstwebsiteever.com/",
-                                owner_id: owner.id
-                            } }
+  describe 'POST /owners/owner_id/houses' do
+    let(:house_attributes) do
+      {
+        category: 'sale',
+        size: 85,
+        rooms: 3,
+        bathrooms: 1,
+        price: 650,
+        link: 'https://www.theworldsworstwebsiteever.com/',
+        owner_id: owner.id
+      }
+    end
 
     context 'when the request is valid' do
       before { post "/owners/#{owner.id}/houses", params: house_attributes }
-			
+
       it 'creates a house record' do
-        expect(JSON.parse(response.body)["category"]).to eq(house_attributes[:category])
-        expect(JSON.parse(response.body)["size"]).to eq(house_attributes[:size])
-        expect(JSON.parse(response.body)["rooms"]).to eq(house_attributes[:rooms])
-        expect(JSON.parse(response.body)["bathrooms"]).to eq(house_attributes[:bathrooms])
-        expect(JSON.parse(response.body)["price"]).to eq(house_attributes[:price])
-				expect(JSON.parse(response.body)["link"]).to eq(house_attributes[:link])
-        expect(JSON.parse(response.body)["owner_id"]).to eq(house_attributes[:owner_id])
+        expect(JSON.parse(response.body)['category']).to eq(house_attributes[:category])
+        expect(JSON.parse(response.body)['size']).to eq(house_attributes[:size])
+        expect(JSON.parse(response.body)['rooms']).to eq(house_attributes[:rooms])
+        expect(JSON.parse(response.body)['bathrooms']).to eq(house_attributes[:bathrooms])
+        expect(JSON.parse(response.body)['price']).to eq(house_attributes[:price])
+        expect(JSON.parse(response.body)['link']).to eq(house_attributes[:link])
+        expect(JSON.parse(response.body)['owner_id']).to eq(house_attributes[:owner_id])
       end
 
       it 'returns status code 200' do
@@ -80,8 +84,8 @@ RSpec.describe "Houses", type: :request do
     end
   end
 
-	describe 'PUT /owners/:owner_id/houses/:id' do
-    let(:params) { { price: 150000 } }
+  describe 'PUT /owners/:owner_id/houses/:id' do
+    let(:params) { { price: 150_000 } }
 
     before { put "/owners/#{owner.id}/houses/#{house_id}", params: params }
 
@@ -92,7 +96,7 @@ RSpec.describe "Houses", type: :request do
 
       it 'updates the house' do
         updated_house = House.find(house_id)
-        expect(updated_house.price).to match(150000)
+        expect(updated_house.price).to match(150_000)
       end
     end
 
@@ -105,7 +109,7 @@ RSpec.describe "Houses", type: :request do
     end
   end
 
-	describe 'DELETE /owners/:id' do
+  describe 'DELETE /owners/:id' do
     before { delete "/owners/#{owner.id}/houses/#{house_id}" }
 
     it 'returns status code 204' do

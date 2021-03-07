@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Owners", type: :request do
-  # initialize test data 
-  let!(:owners)   { FactoryBot.create_list(:owner, 10) }
+RSpec.describe 'Owners', type: :request do
+  # initialize test data
+  let!(:owners) { FactoryBot.create_list(:owner, 10) }
   let(:owner_id) { owners.first.id }
 
   describe 'GET /owners' do
@@ -42,21 +44,23 @@ RSpec.describe "Owners", type: :request do
   end
 
   describe 'POST /owners' do
-    let(:owner_attributes) { {
-                                        category: "independent",
-                                        name: Faker::Name.name,
-                                        email: Faker::Internet.email,
-                                        phone: Faker::PhoneNumber.phone_number 
-                                    } }
+    let(:owner_attributes) do
+      {
+        category: 'independent',
+        name: Faker::Name.name,
+        email: Faker::Internet.email,
+        phone: Faker::PhoneNumber.phone_number
+      }
+    end
 
     context 'when the request is valid' do
       before { post '/owners', params: owner_attributes }
 
       it 'creates a contact person record' do
-        expect(JSON.parse(response.body)["category"]).to eq(owner_attributes[:category])
-        expect(JSON.parse(response.body)["name"]).to eq(owner_attributes[:name])
-        expect(JSON.parse(response.body)["email"]).to eq(owner_attributes[:email])
-        expect(JSON.parse(response.body)["phone"]).to eq(owner_attributes[:phone])
+        expect(JSON.parse(response.body)['category']).to eq(owner_attributes[:category])
+        expect(JSON.parse(response.body)['name']).to eq(owner_attributes[:name])
+        expect(JSON.parse(response.body)['email']).to eq(owner_attributes[:email])
+        expect(JSON.parse(response.body)['phone']).to eq(owner_attributes[:phone])
       end
 
       it 'returns status code 200' do
@@ -65,8 +69,8 @@ RSpec.describe "Owners", type: :request do
     end
   end
 
-  # TODO: test POST /create_from_link request 
-  
+  # TODO: test POST /create_from_link request
+
   describe 'PUT /owners/:id' do
     let(:owners_attributes) { { name: 'Inmobhilario' } }
 
