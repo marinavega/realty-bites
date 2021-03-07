@@ -65,6 +65,8 @@ RSpec.describe "Owners", type: :request do
     end
   end
 
+  # TODO: test POST /create_from_link request 
+  
   describe 'PUT /owners/:id' do
     let(:owners_attributes) { { name: 'Inmobhilario' } }
 
